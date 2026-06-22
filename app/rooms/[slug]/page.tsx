@@ -201,10 +201,10 @@ export default function RoomPage() {
           <span className="section-label reveal-fade-in active" style={{ color: 'rgba(248,247,244,0.7)', letterSpacing: '0.3em' }}>
             {room.category}
           </span>
-          <h1 className="hero-title reveal-fade-in active" style={{ fontSize: '4.8rem', animationDelay: '0.1s' }}>
+          <h1 className="room-hero-title reveal-fade-in active" style={{ animationDelay: '0.1s' }}>
             {room.name}
           </h1>
-          <p className="hero-tagline reveal-fade-in active" style={{ animationDelay: '0.2s', marginBottom: '5.5rem' }}>
+          <p className="room-hero-tagline reveal-fade-in active" style={{ animationDelay: '0.2s' }}>
             {room.size} &bull; {room.view}
           </p>
           
@@ -228,28 +228,28 @@ export default function RoomPage() {
           </div>
         </div>
       </section>
-
+ 
       {/* Main Details Section */}
       <section id="details" className="section-padding max-width-container">
         <div className="contact-grid">
           {/* Left Column: Description & Specifications */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
             <span className="section-label" style={{ alignSelf: 'flex-start' }}>The Living Space</span>
-            <h2 className="section-title" style={{ textAlign: 'left', margin: 0, fontSize: '2.8rem', lineHeight: '1.2' }}>
+            <h2 className="room-detail-title section-title">
               Refined silence, crafted for private contemplation.
             </h2>
             <p style={{ fontSize: '1.05rem', lineHeight: '2.1', color: 'rgba(23, 23, 23, 0.85)' }}>
               {room.description}
             </p>
-
+ 
             {/* Room Features Checklist */}
-            <div className="benefits-container" style={{ padding: '2.5rem', backgroundColor: 'rgba(23, 23, 23, 0.02)', border: '1px solid rgba(23, 23, 23, 0.05)', borderRadius: '4px' }}>
+            <div className="room-benefits-container benefits-container">
               <h4 className="benefits-title" style={{ color: 'var(--color-charcoal)', borderBottom: '1px solid rgba(23, 23, 23, 0.08)', paddingBottom: '1rem', marginBottom: '1.5rem' }}>
                 Room Specifications
               </h4>
-              <div className="benefits-list" style={{ gridTemplateColumns: '1fr 1fr', gap: '1.2rem 2rem', display: 'grid' }}>
+              <div className="room-specs-list">
                 {room.features.map((feat) => (
-                  <div key={feat} className="benefit-item" style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', color: 'rgba(23, 23, 23, 0.75)', fontSize: '0.9rem' }}>
+                  <div key={feat} className="benefit-item">
                     <span className="benefit-icon" style={{ color: 'var(--color-forest)' }}>✦</span>
                     <span>{feat}</span>
                   </div>

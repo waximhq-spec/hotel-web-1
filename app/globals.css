@@ -1426,3 +1426,159 @@ a {
     text-align: center;
   }
 }
+
+/* Mobile Typography and Details Layout Refinements */
+.room-hero-title {
+  font-size: 4.5rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 300;
+  line-height: 1.15;
+  margin-bottom: 2rem;
+}
+
+.room-hero-tagline {
+  margin-bottom: 5.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.35em;
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
+.room-detail-title {
+  text-align: left;
+  margin: 0;
+  font-size: 2.8rem;
+  line-height: 1.25;
+}
+
+.room-benefits-container {
+  padding: 2.5rem;
+  background-color: rgba(23, 23, 23, 0.02);
+  border: 1px solid rgba(23, 23, 23, 0.05);
+  border-radius: 4px;
+}
+
+.room-specs-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.2rem 2rem;
+}
+
+.room-specs-list .benefit-item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  color: rgba(23, 23, 23, 0.75);
+  font-size: 0.9rem;
+}
+
+/* Media Queries for Tablet and Phone viewports */
+@media (max-width: 992px) {
+  .room-hero-title {
+    font-size: 3.2rem;
+    letter-spacing: 0.08em;
+  }
+  
+  #reserve.booking-card {
+    position: relative !important;
+    top: 0 !important;
+    width: 100% !important;
+    margin-top: 3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .room-hero-tagline {
+    margin-bottom: 3.5rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.25em;
+  }
+  
+  .room-detail-title {
+    font-size: 2.1rem;
+    line-height: 1.3;
+  }
+  
+  .section-title {
+    font-size: 2.5rem !important;
+    line-height: 1.35 !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .room-hero-title {
+    font-size: 2.1rem;
+    letter-spacing: 0.05em;
+    line-height: 1.3;
+    margin-bottom: 1.5rem;
+    padding: 0 1rem;
+    text-align: center;
+  }
+  
+  .room-hero-tagline {
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    line-height: 1.6;
+    margin-bottom: 3rem;
+    padding: 0 1rem;
+    text-align: center;
+  }
+
+  .room-detail-title {
+    font-size: 1.75rem;
+    line-height: 1.35;
+    text-align: center;
+  }
+  
+  .section-title {
+    font-size: 1.95rem !important;
+    line-height: 1.35 !important;
+    letter-spacing: -0.01em !important;
+    margin-bottom: 1.4rem !important;
+  }
+
+  .hero-tagline {
+    font-size: 0.7rem !important;
+    letter-spacing: 0.2em !important;
+    line-height: 1.65 !important;
+    margin-bottom: 3.5rem !important;
+    padding: 0 1.2rem !important;
+    text-align: center !important;
+  }
+
+  .hero-cta-subtext {
+    font-size: 0.54rem !important;
+    letter-spacing: 0.15em !important;
+    line-height: 1.5 !important;
+    padding: 0 1.2rem !important;
+    text-align: center !important;
+  }
+
+  .room-benefits-container {
+    padding: 1.5rem;
+  }
+
+  .room-specs-list {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .room-specs-list .benefit-item {
+    font-size: 0.8rem;
+  }
+  
+  /* Additional overall mobile styling fixes */
+  .section-subtitle {
+    font-size: 0.92rem;
+    line-height: 1.8;
+    padding: 0 0.5rem;
+  }
+  
+  .btn-hero-cta {
+    width: 290px !important;
+    max-width: 100%;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+  }
+}
