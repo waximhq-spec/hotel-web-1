@@ -18,21 +18,29 @@ const SUITE_IMAGES = [
   "https://images.pexels.com/photos/6466230/pexels-photo-6466230.jpeg?auto=compress&cs=tinysrgb&w=1200"
 ];
 
+const DESIGN_SUITE_IMAGES = [
+  "https://images.pexels.com/photos/7546283/pexels-photo-7546283.jpeg?auto=compress&cs=tinysrgb&w=1200",
+  "https://images.pexels.com/photos/7546280/pexels-photo-7546280.jpeg?auto=compress&cs=tinysrgb&w=1200",
+  "https://images.pexels.com/photos/7546281/pexels-photo-7546281.jpeg?auto=compress&cs=tinysrgb&w=1200"
+];
+
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [selectedRoom, setSelectedRoom] = useState('Private Pool Villa');
+  const [selectedRoom, setSelectedRoom] = useState('Modernist Design Suite');
   const [selectedMeal, setSelectedMeal] = useState('Breakfast & Dinner (Half Board)');
   
   // Parallax Scroll Tracking
   const [scrollY, setScrollY] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const [suiteImageIndex, setSuiteImageIndex] = useState(0);
+  const [designSuiteImageIndex, setDesignSuiteImageIndex] = useState(0);
 
   // Auto-scroll images timer
   useEffect(() => {
     const timer = setInterval(() => {
       setSuiteImageIndex((prev) => (prev + 1) % SUITE_IMAGES.length);
+      setDesignSuiteImageIndex((prev) => (prev + 1) % DESIGN_SUITE_IMAGES.length);
     }, 4000);
     return () => clearInterval(timer);
   }, []);
@@ -221,25 +229,34 @@ export default function Home() {
         <div className="rooms-grid">
           {/* Card 1 */}
           <div className="room-card">
-            <div className="room-image-container image-wrapper-editorial">
-              <Image
-                src="/images/room_villa.webp"
-                alt="Private Pool Villa"
-                fill
-                sizes="(max-width: 992px) 100vw, 50vw"
-                className="room-image image-zoom-hover"
-              />
+            <div className="room-image-container image-wrapper-editorial" style={{ position: 'relative' }}>
+              {DESIGN_SUITE_IMAGES.map((src, index) => (
+                <Image
+                  key={src}
+                  src={src}
+                  alt={`Modernist Design Suite View ${index + 1}`}
+                  fill
+                  sizes="(max-width: 992px) 100vw, 50vw"
+                  className="room-image image-zoom-hover"
+                  style={{ 
+                    opacity: index === designSuiteImageIndex ? 1 : 0, 
+                    transition: 'opacity 1s ease-in-out',
+                    position: 'absolute',
+                    inset: 0
+                  }}
+                />
+              ))}
             </div>
             <div className="room-meta">
-              <span className="room-category">Private Villa</span>
-              <h3 className="room-title">Private Pool Villa</h3>
+              <span className="room-category">Modernist Suite</span>
+              <h3 className="room-title">Modernist Design Suite</h3>
               <div className="room-footer">
-                <span className="room-specs">180 SQM • Private Infinity Pool • Lake View</span>
+                <span className="room-specs">95 SQM • Walk-In Closet • Courtyard View</span>
                 <span className="room-price">₹75,000 / Night</span>
               </div>
               <div className="room-actions">
                 <Link 
-                  href="/rooms/private-pool-villa"
+                  href="/rooms/modernist-design-suite"
                   className="btn-outline flex-center" 
                   style={{ flex: 1, justifyContent: 'center', gap: '0.6rem' }}
                 >
@@ -247,7 +264,7 @@ export default function Home() {
                   <ArrowRight size={14} className="arrow-icon" />
                 </Link>
                 <button 
-                  onClick={() => handleSelectRoomAndScroll('Private Pool Villa')}
+                  onClick={() => handleSelectRoomAndScroll('Modernist Design Suite')}
                   className="btn-accent flex-center" 
                   style={{ flex: 1, justifyContent: 'center', gap: '0.6rem' }}
                 >
@@ -456,7 +473,7 @@ export default function Home() {
                     onChange={(e) => setSelectedRoom(e.target.value)}
                     className="booking-select"
                   >
-                    <option value="Private Pool Villa">Private Pool Villa — ₹75,000 / Night</option>
+                    <option value="Modernist Design Suite">Modernist Design Suite — ₹75,000 / Night</option>
                     <option value="Signature Butler Suite">Signature Butler Suite — ₹65,000 / Night</option>
                   </select>
                   <ChevronDown className="select-arrow" size={18} />

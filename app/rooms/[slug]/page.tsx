@@ -25,28 +25,28 @@ interface RoomData {
 }
 
 const ROOMS_DATA: Record<string, RoomData> = {
-  'private-pool-villa': {
-    slug: 'private-pool-villa',
-    name: 'Private Pool Villa',
-    category: 'Private Villa',
+  'modernist-design-suite': {
+    slug: 'modernist-design-suite',
+    name: 'Modernist Design Suite',
+    category: 'Modernist Suite',
     price: '₹75,000',
-    size: '180 SQM',
-    view: 'Lake View',
+    size: '95 SQM',
+    view: 'Courtyard View',
     features: [
-      'Private Infinity Pool',
-      '24/7 Dedicated Butler Service',
-      'Lakefront Private Sun Deck',
-      'Raw Concrete Stone Bath',
-      'Welcome Estate Champagne',
+      'Bespoke Walk-in Closet',
+      'Custom Track & Ambient Lighting',
+      'Premium Knitted Wool Bed Linens',
+      'Floor-to-ceiling Mirror Set',
+      'Dressing Table & Lounge Seating',
       'Complimentary Airport Transfer'
     ],
-    description: 'A masterpiece of architectural minimalism, the Private Pool Villa features raw concrete lines, natural timber decks, and an expansive private infinity pool that merges seamlessly with the twilight lake. Unwind in absolute seclusion with dedicated around-the-clock butler service.',
+    description: 'A study in contemporary living and luxury layout. The Modernist Design Suite boasts custom track lighting, rich timber cladding, a spacious walk-in dressing wardrobe, and fine materials designed to create an atmosphere of quiet, curated sophistication.',
     images: [
-      '/images/room_villa.webp',
-      'https://images.pexels.com/photos/6466224/pexels-photo-6466224.jpeg?auto=compress&cs=tinysrgb&w=1200',
-      'https://images.pexels.com/photos/6466285/pexels-photo-6466285.jpeg?auto=compress&cs=tinysrgb&w=1200'
+      'https://images.pexels.com/photos/7546283/pexels-photo-7546283.jpeg?auto=compress&cs=tinysrgb&w=1200',
+      'https://images.pexels.com/photos/7546280/pexels-photo-7546280.jpeg?auto=compress&cs=tinysrgb&w=1200',
+      'https://images.pexels.com/photos/7546281/pexels-photo-7546281.jpeg?auto=compress&cs=tinysrgb&w=1200'
     ],
-    videoSrc: 'https://www.pexels.com/download/video/6466564/'
+    videoSrc: 'https://www.pexels.com/download/video/6466568/'
   },
   'signature-butler-suite': {
     slug: 'signature-butler-suite',
