@@ -31,6 +31,9 @@ html {
   color: var(--color-charcoal);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  max-width: 100%;
+  width: 100%;
 }
 
 body {
@@ -40,6 +43,9 @@ body {
   line-height: 1.9;
   letter-spacing: 0.03em;
   overflow-x: hidden;
+  max-width: 100%;
+  width: 100%;
+  position: relative;
   background-color: var(--color-warm-white);
   color: var(--color-charcoal);
 }
