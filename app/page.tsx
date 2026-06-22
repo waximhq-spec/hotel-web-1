@@ -33,15 +33,15 @@ export default function Home() {
   // Parallax Scroll Tracking
   const [scrollY, setScrollY] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
-  const [suiteImageIndex, setSuiteImageIndex] = useState(0);
-  const [designSuiteImageIndex, setDesignSuiteImageIndex] = useState(0);
+  const [room1ActiveImg, setRoom1ActiveImg] = useState(0);
+  const [room2ActiveImg, setRoom2ActiveImg] = useState(0);
 
   // Auto-scroll images timer
   useEffect(() => {
     const timer = setInterval(() => {
-      setSuiteImageIndex((prev) => (prev + 1) % SUITE_IMAGES.length);
-      setDesignSuiteImageIndex((prev) => (prev + 1) % DESIGN_SUITE_IMAGES.length);
-    }, 4000);
+      setRoom1ActiveImg((prev) => (prev + 1) % DESIGN_SUITE_IMAGES.length);
+      setRoom2ActiveImg((prev) => (prev + 1) % SUITE_IMAGES.length);
+    }, 5000);
     return () => clearInterval(timer);
   }, []);
 
@@ -226,97 +226,226 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="rooms-grid">
-          {/* Card 1 */}
-          <div className="room-card">
-            <div className="room-image-container image-wrapper-editorial" style={{ position: 'relative' }}>
-              {DESIGN_SUITE_IMAGES.map((src, index) => (
-                <Image
-                  key={src}
-                  src={src}
-                  alt={`Modernist Design Suite View ${index + 1}`}
-                  fill
-                  sizes="(max-width: 992px) 100vw, 50vw"
-                  className="room-image image-zoom-hover"
-                  style={{ 
-                    opacity: index === designSuiteImageIndex ? 1 : 0, 
-                    transition: 'opacity 1s ease-in-out',
-                    position: 'absolute',
-                    inset: 0
-                  }}
-                />
-              ))}
+        <div className="rooms-list">
+          {/* Card 1: Modernist Design Suite */}
+          <div className="room-editorial-block">
+            <div className="room-hero-image-wrapper">
+              <Image
+                src={DESIGN_SUITE_IMAGES[room1ActiveImg]}
+                alt="Modernist Design Suite View"
+                fill
+                sizes="100vw"
+                className="room-hero-img"
+                priority
+              />
             </div>
-            <div className="room-meta">
-              <span className="room-category">Modernist Suite</span>
-              <h3 className="room-title">Modernist Design Suite</h3>
-              <div className="room-footer">
-                <span className="room-specs">95 SQM • Walk-In Closet • Courtyard View</span>
-                <span className="room-price">₹75,000 / Night</span>
-              </div>
-              <div className="room-actions">
-                <Link 
-                  href="/rooms/modernist-design-suite"
-                  className="btn-outline flex-center" 
-                  style={{ flex: 1, justifyContent: 'center', gap: '0.6rem' }}
+            
+            {/* Thumbnail Strip */}
+            <div className="room-strip-gallery">
+              {DESIGN_SUITE_IMAGES.map((src, index) => (
+                <div 
+                  key={src} 
+                  onClick={() => setRoom1ActiveImg(index)}
+                  className={`room-strip-thumb ${room1ActiveImg === index ? 'active' : ''}`}
                 >
-                  <span>View Room</span>
+                  <Image
+                    src={src}
+                    alt={`Modernist Design Suite Thumbnail ${index + 1}`}
+                    fill
+                    sizes="(max-width: 768px) 25vw, 150px"
+                    className="room-strip-img"
+                  />
+                </div>
+              ))}
+              <Link href="/rooms/modernist-design-suite" className="room-strip-thumb">
+                <Image
+                  src={SUITE_IMAGES[3]}
+                  alt="Explore more images"
+                  fill
+                  sizes="(max-width: 768px) 25vw, 150px"
+                  className="room-strip-img"
+                />
+                <div className="room-strip-overlay">+12</div>
+              </Link>
+            </div>
+
+            {/* Room Details Block */}
+            <div className="room-editorial-details">
+              <span className="room-editorial-header">01 — MODERNIST SUITE</span>
+              <h3 className="room-editorial-title">Modernist Design Suite</h3>
+              <p className="room-editorial-desc">
+                Designed for guests seeking privacy and understated luxury, the suite combines courtyard garden views, handcrafted interiors, and generous living spaces for an unforgettable stay.
+              </p>
+
+              {/* Specifications Grid */}
+              <div className="room-editorial-specs">
+                <div className="spec-col">
+                  <span className="spec-label">SIZE</span>
+                  <span className="spec-val">95 SQM</span>
+                </div>
+                <div className="spec-divider"></div>
+                <div className="spec-col">
+                  <span className="spec-label">GUESTS</span>
+                  <span className="spec-val">4 Guests</span>
+                </div>
+                <div className="spec-divider"></div>
+                <div className="spec-col">
+                  <span className="spec-label">VIEW</span>
+                  <span className="spec-val">Courtyard View</span>
+                </div>
+              </div>
+
+              {/* Feature Tags */}
+              <div className="room-editorial-tags">
+                <span className="luxury-tag">King Bed</span>
+                <span className="luxury-tag">Walk-In Closet</span>
+                <span className="luxury-tag">Breakfast Included</span>
+                <span className="luxury-tag">Rain Shower</span>
+                <span className="luxury-tag">Private Lounge</span>
+                <span className="luxury-tag">Airport Transfer</span>
+              </div>
+
+              {/* Direct Booking Benefits */}
+              <div className="luxury-benefits-card">
+                <span className="benefits-card-title">DIRECT BOOKING BENEFITS</span>
+                <div className="benefits-card-grid">
+                  <div className="benefit-card-item">✦ Best Available Rate</div>
+                  <div className="benefit-card-item">✦ Complimentary Breakfast</div>
+                  <div className="benefit-card-item">✦ Flexible Check-In</div>
+                  <div className="benefit-card-item">✦ Priority Guest Support</div>
+                </div>
+              </div>
+
+              {/* Pricing Overhaul */}
+              <div className="luxury-pricing">
+                <span className="price-lead">Starting From</span>
+                <span className="price-amount">₹75,000</span>
+                <span className="price-period">Per Night</span>
+              </div>
+
+              {/* Concierge Actions */}
+              <div className="luxury-actions">
+                <Link href="/rooms/modernist-design-suite" className="btn-luxury-primary">
+                  <span>Explore Suite</span>
                   <ArrowRight size={14} className="arrow-icon" />
                 </Link>
                 <button 
                   onClick={() => handleSelectRoomAndScroll('Modernist Design Suite')}
-                  className="btn-accent flex-center" 
-                  style={{ flex: 1, justifyContent: 'center', gap: '0.6rem' }}
+                  className="btn-luxury-secondary"
                 >
-                  <span>Book Direct</span>
+                  <span>Reserve Direct</span>
                   <ArrowRight size={14} className="arrow-icon" />
                 </button>
               </div>
             </div>
           </div>
 
-          {/* Card 2 */}
-          <div className="room-card">
-            <div className="room-image-container image-wrapper-editorial" style={{ position: 'relative' }}>
-              {SUITE_IMAGES.map((src, index) => (
-                <Image
-                  key={src}
-                  src={src}
-                  alt={`Signature Butler Suite View ${index + 1}`}
-                  fill
-                  sizes="(max-width: 992px) 100vw, 50vw"
-                  className="room-image image-zoom-hover"
-                  style={{ 
-                    opacity: index === suiteImageIndex ? 1 : 0, 
-                    transition: 'opacity 1s ease-in-out',
-                    position: 'absolute',
-                    inset: 0
-                  }}
-                />
-              ))}
+          {/* Card 2: Signature Butler Suite */}
+          <div className="room-editorial-block">
+            <div className="room-hero-image-wrapper">
+              <Image
+                src={SUITE_IMAGES[room2ActiveImg]}
+                alt="Signature Butler Suite View"
+                fill
+                sizes="100vw"
+                className="room-hero-img"
+              />
             </div>
-            <div className="room-meta">
-              <span className="room-category">Signature Suite</span>
-              <h3 className="room-title">Signature Butler Suite</h3>
-              <div className="room-footer">
-                <span className="room-specs">120 SQM • 24/7 Butler Service • In-Suite Dining</span>
-                <span className="room-price">₹65,000 / Night</span>
-              </div>
-              <div className="room-actions">
-                <Link 
-                  href="/rooms/signature-butler-suite"
-                  className="btn-outline flex-center" 
-                  style={{ flex: 1, justifyContent: 'center', gap: '0.6rem' }}
+            
+            {/* Thumbnail Strip */}
+            <div className="room-strip-gallery">
+              {SUITE_IMAGES.slice(0, 3).map((src, index) => (
+                <div 
+                  key={src} 
+                  onClick={() => setRoom2ActiveImg(index)}
+                  className={`room-strip-thumb ${room2ActiveImg === index ? 'active' : ''}`}
                 >
-                  <span>View Room</span>
+                  <Image
+                    src={src}
+                    alt={`Signature Butler Suite Thumbnail ${index + 1}`}
+                    fill
+                    sizes="(max-width: 768px) 25vw, 150px"
+                    className="room-strip-img"
+                  />
+                </div>
+              ))}
+              <Link href="/rooms/signature-butler-suite" className="room-strip-thumb">
+                <Image
+                  src={SUITE_IMAGES[3]}
+                  alt="Explore more images"
+                  fill
+                  sizes="(max-width: 768px) 25vw, 150px"
+                  className="room-strip-img"
+                />
+                <div className="room-strip-overlay">+12</div>
+              </Link>
+            </div>
+
+            {/* Room Details Block */}
+            <div className="room-editorial-details">
+              <span className="room-editorial-header">02 — SIGNATURE SUITE</span>
+              <h3 className="room-editorial-title">Signature Butler Suite</h3>
+              <p className="room-editorial-desc">
+                An expansive suite offering private quarters, high-ceiling panoramas, and a dedicated butler foyer. Meticulously designed with raw timbers, premium stone, and fine Italian linens.
+              </p>
+
+              {/* Specifications Grid */}
+              <div className="room-editorial-specs">
+                <div className="spec-col">
+                  <span className="spec-label">SIZE</span>
+                  <span className="spec-val">120 SQM</span>
+                </div>
+                <div className="spec-divider"></div>
+                <div className="spec-col">
+                  <span className="spec-label">GUESTS</span>
+                  <span className="spec-val">4 Guests</span>
+                </div>
+                <div className="spec-divider"></div>
+                <div className="spec-col">
+                  <span className="spec-label">VIEW</span>
+                  <span className="spec-val">Panoramic Lake View</span>
+                </div>
+              </div>
+
+              {/* Feature Tags */}
+              <div className="room-editorial-tags">
+                <span className="luxury-tag">King Bed</span>
+                <span className="luxury-tag">Lake View</span>
+                <span className="luxury-tag">In-Suite Dining</span>
+                <span className="luxury-tag">Rainforest Tub</span>
+                <span className="luxury-tag">Private Balcony</span>
+                <span className="luxury-tag">24/7 Butler</span>
+              </div>
+
+              {/* Direct Booking Benefits */}
+              <div className="luxury-benefits-card">
+                <span className="benefits-card-title">DIRECT BOOKING BENEFITS</span>
+                <div className="benefits-card-grid">
+                  <div className="benefit-card-item">✦ Best Available Rate</div>
+                  <div className="benefit-card-item">✦ Complimentary Breakfast</div>
+                  <div className="benefit-card-item">✦ Flexible Check-In</div>
+                  <div className="benefit-card-item">✦ Priority Guest Support</div>
+                </div>
+              </div>
+
+              {/* Pricing Overhaul */}
+              <div className="luxury-pricing">
+                <span className="price-lead">Starting From</span>
+                <span className="price-amount">₹65,000</span>
+                <span className="price-period">Per Night</span>
+              </div>
+
+              {/* Concierge Actions */}
+              <div className="luxury-actions">
+                <Link href="/rooms/signature-butler-suite" className="btn-luxury-primary">
+                  <span>Explore Suite</span>
                   <ArrowRight size={14} className="arrow-icon" />
                 </Link>
                 <button 
                   onClick={() => handleSelectRoomAndScroll('Signature Butler Suite')}
-                  className="btn-accent flex-center" 
-                  style={{ flex: 1, justifyContent: 'center', gap: '0.6rem' }}
+                  className="btn-luxury-secondary"
                 >
-                  <span>Book Direct</span>
+                  <span>Reserve Direct</span>
                   <ArrowRight size={14} className="arrow-icon" />
                 </button>
               </div>
