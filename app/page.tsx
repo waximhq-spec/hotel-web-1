@@ -8,8 +8,20 @@ import {
   ChevronDown, 
   Menu, 
   X, 
-  MessageSquare
+  MessageSquare,
+  Plus,
+  Minus,
+  Thermometer,
+  Wifi,
+  Tv,
+  Droplets,
+  Wind,
+  Shirt,
+  Sparkles,
+  Utensils,
+  Coffee
 } from 'lucide-react';
+import EnquiryModal from './components/EnquiryModal';
 
 const SUITE_IMAGES = [
   "https://images.pexels.com/photos/6466224/pexels-photo-6466224.jpeg?auto=compress&cs=tinysrgb&w=1200",
@@ -24,11 +36,37 @@ const DESIGN_SUITE_IMAGES = [
   "https://images.pexels.com/photos/7546281/pexels-photo-7546281.jpeg?auto=compress&cs=tinysrgb&w=1200"
 ];
 
+const FAQ_ITEMS = [
+  {
+    q: "What is the check-in and check-out policy?",
+    a: "Check-in is from 3:00 PM and check-out is before 11:00 AM. Early check-in or late check-out is subject to availability and can be coordinated directly with our hotel host."
+  },
+  {
+    q: "Are all meals included in the stay?",
+    a: "Yes, our luxury stay options are fully inclusive, featuring custom menus curated by our in-house chef, sunrise tea, morning breakfast spreads, afternoon high tea, and multi-course candlelight dinners."
+  },
+  {
+    q: "How do we coordinate airport transfers?",
+    a: "We offer private, chauffeured transfer service from Zurich Airport directly to the hotel. For all direct reservations, this round-trip transfer is completely complimentary."
+  },
+  {
+    q: "Is there private parking available on site?",
+    a: "Yes, we provide secure, gated private parking on site with 24-hour security and CCTV surveillance, completely complimentary for all guests."
+  },
+  {
+    q: "What is the connectivity situation in the valley?",
+    a: "The hotel is equipped with high-speed fiber Wi-Fi throughout all rooms and communal areas, ensuring excellent connectivity for remote work or streaming."
+  }
+];
+
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedRoom, setSelectedRoom] = useState('Modernist Design Suite');
   const [selectedMeal, setSelectedMeal] = useState('Breakfast & Dinner (Half Board)');
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [isEnquireModalOpen, setIsEnquireModalOpen] = useState(false);
+  const [enquireInitialRoom, setEnquireInitialRoom] = useState('Modernist Design Suite');
   
   // Parallax Scroll Tracking
   const [scrollY, setScrollY] = useState(0);
@@ -102,7 +140,7 @@ export default function Home() {
   // WhatsApp link generator
   const getWhatsAppLink = () => {
     const phone = '919876543210';
-    const message = `Hello KAYA Villa,%0A%0AI would like to make a reservation for the *${selectedRoom}* under the *${selectedMeal}* plan. Please check availability and details.%0A%0AThank you.`;
+    const message = `Hello KAYA Hotel,%0A%0AI would like to make a reservation for the *${selectedRoom}* under the *${selectedMeal}* plan. Please check availability and details.%0A%0AThank you.`;
     return `https://wa.me/${phone}?text=${message}`;
   };
 
@@ -110,14 +148,18 @@ export default function Home() {
     <>
       {/* Navigation */}
       <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
-        <a href="#" className="navbar-logo">K A Y A</a>
+        <Link href="/" className="navbar-logo">K A Y A</Link>
         <ul className="navbar-links">
-          <li><a href="#about" className="navbar-link">About</a></li>
-          <li><a href="#rooms" className="navbar-link">Rooms</a></li>
-          <li><a href="#booking" className="navbar-link">Book</a></li>
+          <li><Link href="/explore" className="navbar-link">Explore The Hotel</Link></li>
+          <li><Link href="/explore#dining" className="navbar-link">Dining</Link></li>
+          <li><a href="#reviews" className="navbar-link">Reviews</a></li>
           <li><a href="#gallery" className="navbar-link">Gallery</a></li>
-          <li><a href="#contact" className="navbar-link">Contact</a></li>
+          <li><a href="#about" className="navbar-link">About</a></li>
+          <li><a href="#faqs" className="navbar-link">FAQs</a></li>
         </ul>
+        <div className="navbar-actions">
+          <button onClick={() => { setEnquireInitialRoom('Modernist Design Suite'); setIsEnquireModalOpen(true); }} className="btn-navbar-enquire">Enquire Now</button>
+        </div>
         <button 
           className="mobile-menu-btn" 
           onClick={() => setMobileMenuOpen(true)}
@@ -127,21 +169,58 @@ export default function Home() {
         </button>
       </nav>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu — editorial dark overlay */}
       <div className={`mobile-menu ${mobileMenuOpen ? 'open' : ''}`}>
-        <button 
-          className="mobile-menu-close" 
-          onClick={() => setMobileMenuOpen(false)}
-          aria-label="Close menu"
-        >
-          <X size={26} />
-        </button>
-        <a href="#about" className="mobile-menu-link" onClick={() => setMobileMenuOpen(false)}>About</a>
-        <a href="#rooms" className="mobile-menu-link" onClick={() => setMobileMenuOpen(false)}>Rooms</a>
-        <a href="#booking" className="mobile-menu-link" onClick={() => setMobileMenuOpen(false)}>Book</a>
-        <a href="#gallery" className="mobile-menu-link" onClick={() => setMobileMenuOpen(false)}>Gallery</a>
-        <a href="#contact" className="mobile-menu-link" onClick={() => setMobileMenuOpen(false)}>Contact</a>
+        {/* Top header bar */}
+        <div className="mobile-menu-header">
+          <div className="mobile-menu-brand">
+            <span className="mobile-menu-brand-name">K A Y A</span>
+            <span className="mobile-menu-brand-sub">HOTEL</span>
+          </div>
+          <button
+            className="mobile-menu-enquire"
+            onClick={() => { setMobileMenuOpen(false); setEnquireInitialRoom('Modernist Design Suite'); setIsEnquireModalOpen(true); }}
+          >
+            ENQUIRE NOW
+          </button>
+          <button
+            className="mobile-menu-close"
+            onClick={() => setMobileMenuOpen(false)}
+            aria-label="Close menu"
+          >
+            <X size={22} />
+          </button>
+        </div>
+
+        {/* Numbered nav links */}
+        <nav className="mobile-menu-nav">
+          <Link href="/explore" className="mobile-menu-item" onClick={() => setMobileMenuOpen(false)}>
+            <span className="mobile-menu-num">01</span>
+            <span className="mobile-menu-label">Explore The Hotel</span>
+          </Link>
+          <Link href="/explore#dining" className="mobile-menu-item" onClick={() => setMobileMenuOpen(false)}>
+            <span className="mobile-menu-num">02</span>
+            <span className="mobile-menu-label">Dining</span>
+          </Link>
+          <a href="#reviews" className="mobile-menu-item" onClick={() => setMobileMenuOpen(false)}>
+            <span className="mobile-menu-num">03</span>
+            <span className="mobile-menu-label">Reviews</span>
+          </a>
+          <a href="#gallery" className="mobile-menu-item" onClick={() => setMobileMenuOpen(false)}>
+            <span className="mobile-menu-num">04</span>
+            <span className="mobile-menu-label">Gallery</span>
+          </a>
+          <a href="#about" className="mobile-menu-item" onClick={() => setMobileMenuOpen(false)}>
+            <span className="mobile-menu-num">05</span>
+            <span className="mobile-menu-label">About</span>
+          </a>
+          <a href="#faqs" className="mobile-menu-item" onClick={() => setMobileMenuOpen(false)}>
+            <span className="mobile-menu-num">06</span>
+            <span className="mobile-menu-label">FAQs</span>
+          </a>
+        </nav>
       </div>
+
 
       {/* Hero Section (Cinematic Zoom & Parallax) */}
       <section className="hero">
@@ -177,7 +256,7 @@ export default function Home() {
           )}
         </div>
         <div className="hero-overlay"></div>
-        <div className="hero-content">
+        <div className="hero-content" style={{ paddingBottom: '8rem' }}>
           <h1 className="hero-title reveal-fade-in active">KAYA</h1>
           <p className="hero-tagline reveal-fade-in active" style={{ animationDelay: '0.2s' }}>
             A quiet luxury hotel stay of design
@@ -193,20 +272,115 @@ export default function Home() {
             <span className="hero-cta-subtext">Best Available Rate &bull; Exclusive Benefits</span>
           </div>
         </div>
+
+        {/* Floating Property Stats Bar */}
+        <div className="hero-stats-bar">
+          <div className="hero-stats-container">
+            <div className="hero-stat-item">
+              <span className="hero-stat-label">LOCATION</span>
+              <span className="hero-stat-value">Swiss Alps</span>
+            </div>
+            <div className="hero-stat-item">
+              <span className="hero-stat-label">ROOMS</span>
+              <span className="hero-stat-value">4 Bedrooms</span>
+            </div>
+            <div className="hero-stat-item">
+              <span className="hero-stat-label">CATEGORIES</span>
+              <span className="hero-stat-value">2 Suite Types</span>
+            </div>
+            <div className="hero-stat-item">
+              <span className="hero-stat-label">BOARD</span>
+              <span className="hero-stat-value">All-Inclusive</span>
+            </div>
+          </div>
+          <button onClick={() => { setEnquireInitialRoom(selectedRoom); setIsEnquireModalOpen(true); }} className="btn-hero-enquire">
+            ENQUIRE ABOUT YOUR STAY
+          </button>
+        </div>
       </section>
 
-      {/* Editorial Statement */}
-      <section id="about" className="section-padding max-width-container reveal-fade-in" style={{ textAlign: 'center' }}>
-        <span className="section-label">The philosophy</span>
-        <h2 className="section-title" style={{ maxWidth: '900px', margin: '0 auto 2.5rem auto', lineHeight: '1.35' }}>
-          Where absolute stillness meets pure architectural expression.
-        </h2>
-        <p className="section-subtitle" style={{ maxWidth: '720px', margin: '0 auto', fontSize: '1.05rem', lineHeight: '2' }}>
-          Nestled on the edge of a serene, mirror-like lake, KAYA is a boutique luxury hotel designed for quiet repose. 
-          Inspired by the raw minimalism of Aman and the wellness philosophies of Six Senses, we offer an intimate escape 
-          from the noise of the world. Every corner is crafted with raw concrete, natural timbers, and local stone—blending 
-          seamlessly into the mist-covered mountains.
-        </p>
+      {/* Property Details Section (About) */}
+      <section id="about" className="section-padding max-width-container reveal-fade-in">
+        <div className="property-details-grid">
+          {/* Left Column: Text & CTA */}
+          <div className="property-left-desc">
+            <span className="section-label">ABOUT THE PROPERTY</span>
+            <h2 className="section-title about-heading">
+              Built for the valley.<br />Designed around tranquility.
+            </h2>
+            
+            <div className="property-body-text">
+              <p>
+                KAYA stands at 1,815 metres in the Engadin Valley — one of the Swiss Alps' most breathtaking and pristine alpine corridors. Below the lower garden, the Inn River runs ice-cold and crystal clear. Above, ancient pine and larch forests climb toward alpine passes that open onto the Bernina Range.
+              </p>
+              <p>
+                The hotel was not built into this landscape. It was drawn from it. Local stone-clad walls, larch-wood ceilings, Swiss wool textiles — each element speaks the same language as the valley beyond the windows. The pine-scented air, the particular quality of light through the mountain canopy, the sound of the river after dark — these are not amenities. They are the design.
+              </p>
+              <p>
+                We are small by intention. Four bedrooms, a single living area, one dining table, one kitchen. Small enough that we know how you take your espresso by the second morning. Small enough that the tranquility you travelled this far to find remains, always, intact.
+              </p>
+            </div>
+
+            <div className="property-action-links">
+              <button onClick={() => { setEnquireInitialRoom('Modernist Design Suite'); setIsEnquireModalOpen(true); }} className="prop-text-link">MAKE A RESERVATION</button>
+              <span className="prop-bullet">•</span>
+              <a href="tel:+919858301646" className="prop-text-link">CALL US</a>
+              <span className="prop-bullet">•</span>
+              <a href="mailto:concierge@kayalakehotel.com" className="prop-text-link">EMAIL US</a>
+            </div>
+          </div>
+
+          {/* Right Column: Property Table */}
+          <div className="property-right-table-col">
+            <span className="table-header-label">PROPERTY DETAILS</span>
+            <div className="property-table-container">
+              <div className="prop-row">
+                <span className="prop-label">LOCATION</span>
+                <span className="prop-val">Silvaplana, Engadin Valley, Graubünden, Switzerland</span>
+              </div>
+              <div className="prop-row">
+                <span className="prop-label">ALTITUDE</span>
+                <span className="prop-val">1,815 metres above sea level</span>
+              </div>
+              <div className="prop-row">
+                <span className="prop-label">VALLEY</span>
+                <span className="prop-val">Engadin Valley &bull; Swiss Alps</span>
+              </div>
+              <div className="prop-row">
+                <span className="prop-label">CHECK-IN</span>
+                <span className="prop-val">3:00 PM &bull; Check-out 11:00 AM</span>
+              </div>
+              <div className="prop-row">
+                <span className="prop-label">RECEPTION</span>
+                <span className="prop-val">24-hour hotel host service</span>
+              </div>
+              <div className="prop-row">
+                <span className="prop-label">CONNECTIVITY</span>
+                <span className="prop-val">High-speed Wi-Fi throughout</span>
+              </div>
+              <div className="prop-row">
+                <span className="prop-label">PARKING</span>
+                <span className="prop-val">Complimentary private parking on site</span>
+              </div>
+              <div className="prop-row">
+                <span className="prop-label">TRANSFERS</span>
+                <span className="prop-val">Private transfer from Zurich</span>
+              </div>
+              <div className="prop-row">
+                <span className="prop-label">DINING</span>
+                <span className="prop-val">All meals included</span>
+              </div>
+              <div className="prop-row">
+                <span className="prop-label">CONTACT</span>
+                <span className="prop-val">+41 81 838 6000</span>
+              </div>
+            </div>
+            <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" className="prop-maps-link">
+              <span>OPEN IN MAPS</span>
+              <ArrowRight size={12} style={{ marginLeft: '4px' }} />
+            </a>
+          </div>
+        </div>
       </section>
 
       {/* Subtle Separator */}
@@ -328,7 +502,7 @@ export default function Home() {
                   <ArrowRight size={14} className="arrow-icon" />
                 </Link>
                 <button 
-                  onClick={() => handleSelectRoomAndScroll('Modernist Design Suite')}
+                  onClick={() => { setEnquireInitialRoom('Modernist Design Suite'); setIsEnquireModalOpen(true); }}
                   className="btn-luxury-secondary"
                 >
                   <span>Reserve Direct</span>
@@ -440,7 +614,7 @@ export default function Home() {
                   <ArrowRight size={14} className="arrow-icon" />
                 </Link>
                 <button 
-                  onClick={() => handleSelectRoomAndScroll('Signature Butler Suite')}
+                  onClick={() => { setEnquireInitialRoom('Signature Butler Suite'); setIsEnquireModalOpen(true); }}
                   className="btn-luxury-secondary"
                 >
                   <span>Reserve Direct</span>
@@ -452,7 +626,65 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Amenities Section */}
+      <section className="section-padding reveal-fade-in" style={{ backgroundColor: '#171717', color: 'var(--color-warm-white)', padding: '8rem 0' }}>
+        <div className="max-width-container amenities-grid-layout">
+          {/* Left Column: List */}
+          <div className="amenities-left">
+            <span className="section-label" style={{ color: '#E2DCCF' }}>ALL-INCLUSIVE</span>
+            <h2 className="section-title" style={{ color: 'var(--color-warm-white)', marginBottom: '3rem', textAlign: 'left' }}>Every comfort, already in place.</h2>
+            
+            <div className="amenities-tagline-label">AMENITIES</div>
+            <ul className="amenities-text-list">
+              <li>Spacious parking</li>
+              <li>24hr hotel host</li>
+              <li>Onsite cook</li>
+              <li>Fully gated</li>
+              <li>24hr security CCTV</li>
+            </ul>
+          </div>
 
+          {/* Right Column: Grid */}
+          <div className="amenities-right-grid">
+            <div className="amenity-icon-card">
+              <Thermometer className="amenity-icon" size={24} />
+              <span className="amenity-name">Central heating</span>
+            </div>
+            <div className="amenity-icon-card">
+              <Wifi className="amenity-icon" size={24} />
+              <span className="amenity-name">WiFi</span>
+            </div>
+            <div className="amenity-icon-card">
+              <Tv className="amenity-icon" size={24} />
+              <span className="amenity-name">TV</span>
+            </div>
+            <div className="amenity-icon-card">
+              <Droplets className="amenity-icon" size={24} />
+              <span className="amenity-name">Hot water</span>
+            </div>
+            <div className="amenity-icon-card">
+              <Wind className="amenity-icon" size={24} />
+              <span className="amenity-name">Hair Dryer</span>
+            </div>
+            <div className="amenity-icon-card">
+              <Shirt className="amenity-icon" size={24} />
+              <span className="amenity-name">Iron</span>
+            </div>
+            <div className="amenity-icon-card">
+              <Sparkles className="amenity-icon" size={24} />
+              <span className="amenity-name">Washer and Dryer</span>
+            </div>
+            <div className="amenity-icon-card">
+              <Utensils className="amenity-icon" size={24} />
+              <span className="amenity-name">Fully equipped kitchen and dinnerware</span>
+            </div>
+            <div className="amenity-icon-card">
+              <Coffee className="amenity-icon" size={24} />
+              <span className="amenity-name">Coffee machine</span>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Booking Section */}
       <section id="booking" className="section-padding max-width-container reveal-fade-in">
@@ -578,7 +810,7 @@ export default function Home() {
 
             <div className="booking-footer">
               <p style={{ fontWeight: 500, color: 'var(--color-charcoal)', marginBottom: '0.4rem', letterSpacing: '0.1em' }}>Direct Concierge Hotline</p>
-              <p style={{ fontSize: '0.9rem' }}>+91 98765 43210  •  concierge@kayalakevilla.com</p>
+              <p style={{ fontSize: '0.9rem' }}>+41 81 838 6000  •  concierge@kayalakehotel.com</p>
             </div>
           </div>
         </div>
@@ -622,7 +854,7 @@ export default function Home() {
       </section>
 
       {/* Testimonials */}
-      <section className="section-padding reveal-fade-in" style={{ borderTop: '1px solid rgba(23,23,23,0.06)', borderBottom: '1px solid rgba(23,23,23,0.06)' }}>
+      <section id="reviews" className="section-padding reveal-fade-in" style={{ borderTop: '1px solid rgba(23,23,23,0.06)', borderBottom: '1px solid rgba(23,23,23,0.06)' }}>
         <div className="max-width-container">
           <div className="testimonials-grid">
             <div className="testimonial-card">
@@ -652,6 +884,49 @@ export default function Home() {
         </div>
       </section>
 
+      {/* FAQs Section */}
+      <section id="faqs" className="section-padding max-width-container reveal-fade-in" style={{ borderBottom: '1px solid rgba(23,23,23,0.06)' }}>
+        <div className="section-header">
+          <span className="section-label">Questions</span>
+          <h2 className="section-title">Frequently Asked Questions</h2>
+          <p className="section-subtitle" style={{ maxWidth: '650px', margin: '0 auto' }}>
+            Everything you need to know about our rates, amenities, check-in, and personalized stay pathways.
+          </p>
+        </div>
+
+        <div className="faqs-container" style={{ maxWidth: '800px', margin: '4rem auto 0 auto' }}>
+          {FAQ_ITEMS.map((item, idx) => (
+            <div key={idx} className="faq-item" style={{ borderBottom: '1px solid rgba(23,23,23,0.08)', padding: '1.8rem 0' }}>
+              <button 
+                onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
+                style={{ 
+                  width: '100%', 
+                  background: 'none', 
+                  border: 'none', 
+                  display: 'flex', 
+                  justifyContent: 'space-between', 
+                  alignItems: 'center', 
+                  textAlign: 'left',
+                  cursor: 'pointer',
+                  padding: 0
+                }}
+              >
+                <span style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem', color: 'var(--color-charcoal)' }}>{item.q}</span>
+                {openFaq === idx ? <Minus size={18} /> : <Plus size={18} />}
+              </button>
+              <div style={{ 
+                maxHeight: openFaq === idx ? '500px' : '0', 
+                overflow: 'hidden', 
+                transition: 'all 0.4s ease-in-out',
+                marginTop: openFaq === idx ? '1.5rem' : '0'
+              }}>
+                <p style={{ color: 'rgba(23, 23, 23, 0.7)', fontSize: '0.98rem', lineHeight: '1.8' }}>{item.a}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* Contact Section */}
       <section id="contact" className="section-padding max-width-container reveal-fade-in">
         <div className="section-header">
@@ -668,21 +943,21 @@ export default function Home() {
             <div className="contact-info-block">
               <span className="contact-info-label">Address</span>
               <p className="contact-info-value serif">
-                KAYA Estate, Lake Estate road,<br />
-                Misty Valley, Himachal Pradesh, India
+                KAYA Estate, Via Veglia 12,<br />
+                7513 Silvaplana, Switzerland
               </p>
             </div>
 
             <div className="contact-info-block">
               <span className="contact-info-label">Coordinates</span>
-              <p className="contact-info-value">32.2374° N, 76.3219° E</p>
+              <p className="contact-info-value">46.4608° N, 9.7955° E</p>
             </div>
 
             <div className="map-container">
               <div className="map-overlay">
                 <div className="map-accent-dot"></div>
-                <h4 className="map-title">KAYA LAKE VILLA</h4>
-                <p className="map-coords">32°14'15" N, 76°19'10" E</p>
+                <h4 className="map-title">KAYA LAKE HOTEL</h4>
+                <p className="map-coords">46°27'39" N, 9°47'44" E</p>
               </div>
             </div>
           </div>
@@ -764,10 +1039,10 @@ export default function Home() {
             <div className="footer-column">
               <span className="footer-title">Contact</span>
               <p className="footer-contact">
-                KAYA Villa Estate,<br />
-                Himachal Pradesh, India<br /><br />
-                T: +91 98765 43210<br />
-                E: concierge@kayalakevilla.com
+                KAYA Hotel Estate,<br />
+                7513 Silvaplana, Switzerland<br /><br />
+                T: +41 81 838 6000<br />
+                E: concierge@kayalakehotel.com
               </p>
             </div>
 
@@ -783,11 +1058,17 @@ export default function Home() {
           </div>
 
           <div className="footer-bottom">
-            <p>&copy; {new Date().getFullYear()} KAYA LAKE VILLA. All rights reserved.</p>
+            <p>&copy; {new Date().getFullYear()} KAYA LAKE HOTEL. All rights reserved.</p>
             <p style={{ letterSpacing: '0.12em', opacity: 0.8 }}>AMAN & SIX SENSES INSPIRATION</p>
           </div>
         </div>
       </footer>
+
+      <EnquiryModal 
+        isOpen={isEnquireModalOpen} 
+        onClose={() => setIsEnquireModalOpen(false)} 
+        initialRoom={enquireInitialRoom} 
+      />
     </>
   );
 }

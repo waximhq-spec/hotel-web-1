@@ -10,6 +10,7 @@ import {
   ArrowLeft, 
   MessageSquare
 } from 'lucide-react';
+import EnquiryModal from '../../components/EnquiryModal';
 
 interface RoomData {
   slug: string;
@@ -82,6 +83,7 @@ export default function RoomPage() {
   const [activeMediaIndex, setActiveMediaIndex] = useState(0); // 0 = Video, 1..N = Images
   const [selectedMeal, setSelectedMeal] = useState('Breakfast & Dinner (Half Board)');
   const [scrolled, setScrolled] = useState(false);
+  const [isEnquireModalOpen, setIsEnquireModalOpen] = useState(false);
 
   // Scroll tracking for header
   useEffect(() => {
@@ -121,7 +123,7 @@ export default function RoomPage() {
   // WhatsApp link generator
   const getWhatsAppLink = () => {
     const phone = '919876543210';
-    const message = `Hello KAYA Villa,%0A%0AI would like to make a reservation for the *${room.name}* under the *${selectedMeal}* plan. Please check availability for my details.%0A%0AThank you.`;
+    const message = `Hello KAYA Hotel,%0A%0AI would like to make a reservation for the *${room.name}* under the *${selectedMeal}* plan. Please check availability for my details.%0A%0AThank you.`;
     return `https://wa.me/${phone}?text=${message}`;
   };
 
@@ -133,9 +135,9 @@ export default function RoomPage() {
       <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
         <Link href="/" className="navbar-logo">K A Y A</Link>
         <ul className="navbar-links">
-          <li><Link href="/" className="navbar-link">Back to Estate</Link></li>
+          <li><Link href="/" className="navbar-link">Back to Hotel</Link></li>
           <li><a href="#details" className="navbar-link">Details</a></li>
-          <li><a href="#reserve" className="navbar-link">Reserve</a></li>
+          <li><button onClick={() => setIsEnquireModalOpen(true)} className="navbar-link" style={{ background: 'none', border: 'none', font: 'inherit', cursor: 'pointer' }}>Reserve</button></li>
         </ul>
         <Link href="/" className="mobile-menu-btn" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.72rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--color-charcoal)' }}>
           <ArrowLeft size={14} />
@@ -238,7 +240,7 @@ export default function RoomPage() {
             <h2 className="room-detail-title section-title">
               Refined silence, crafted for private contemplation.
             </h2>
-            <p style={{ fontSize: '1.05rem', lineHeight: '2.1', color: 'rgba(23, 23, 23, 0.85)' }}>
+            <p className="room-detail-desc">
               {room.description}
             </p>
  
@@ -291,16 +293,13 @@ export default function RoomPage() {
               </div>
             </div>
 
-            <a 
-              href={getWhatsAppLink()} 
-              target="_blank" 
-              rel="noopener noreferrer" 
+            <button 
+              onClick={() => setIsEnquireModalOpen(true)}
               className="btn-accent flex-center"
-              style={{ gap: '0.8rem', marginTop: '2rem' }}
+              style={{ gap: '0.8rem', marginTop: '2rem', width: '100%' }}
             >
-              <MessageSquare size={18} />
-              <span>Request Villa Booking</span>
-            </a>
+              <span>Request Suite Booking</span>
+            </button>
 
             <div className="booking-footer-dark">
               <span>Direct Concierge Reply Within 2 Hours</span>
@@ -328,7 +327,6 @@ export default function RoomPage() {
               <ul className="footer-links">
                 <li><Link href="/#about" className="footer-link">The Hotel</Link></li>
                 <li><Link href="/#rooms" className="footer-link">Rooms & Suites</Link></li>
-                <li><Link href="/#experiences" className="footer-link">Rituals (Experiences)</Link></li>
                 <li><Link href="/#gallery" className="footer-link">Visual Journal</Link></li>
               </ul>
             </div>
@@ -337,10 +335,10 @@ export default function RoomPage() {
             <div className="footer-column">
               <span className="footer-title">Contact</span>
               <p className="footer-contact">
-                KAYA Villa Estate,<br />
-                Himachal Pradesh, India<br /><br />
-                T: +91 98765 43210<br />
-                E: concierge@kayalakevilla.com
+                KAYA Hotel Estate,<br />
+                7513 Silvaplana, Switzerland<br /><br />
+                T: +41 81 838 6000<br />
+                E: concierge@kayalakehotel.com
               </p>
             </div>
 
@@ -356,11 +354,17 @@ export default function RoomPage() {
           </div>
 
           <div className="footer-bottom">
-            <p>&copy; {new Date().getFullYear()} KAYA LAKE VILLA. All rights reserved.</p>
+            <p>&copy; {new Date().getFullYear()} KAYA LAKE HOTEL. All rights reserved.</p>
             <p style={{ letterSpacing: '0.12em', opacity: 0.8 }}>AMAN & SIX SENSES INSPIRATION</p>
           </div>
         </div>
       </footer>
+
+      <EnquiryModal 
+        isOpen={isEnquireModalOpen} 
+        onClose={() => setIsEnquireModalOpen(false)} 
+        initialRoom={room.name}
+      />
     </>
   );
 }
