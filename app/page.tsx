@@ -217,10 +217,10 @@ export default function Home() {
       </div>
 
       {/* Rooms Section */}
-      <section id="rooms" className="section-padding max-width-container reveal-fade-in">
-        <div className="section-header">
-          <span className="section-label">Sanctuaries</span>
-          <h2 className="section-title">Living Spaces</h2>
+      <section id="rooms" className="reveal-fade-in">
+        <div className="section-header rooms-header max-width-container">
+          <span className="section-label">Living Spaces</span>
+          <h2 className="section-title">Rooms & Suites</h2>
           <p className="section-subtitle" style={{ maxWidth: '650px', margin: '0 auto' }}>
             Designed to blur the lines between interior comfort and the raw grandeur of the surrounding landscape.
           </p>
