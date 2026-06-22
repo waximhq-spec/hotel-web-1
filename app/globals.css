@@ -334,11 +334,18 @@ a {
 @media (max-width: 768px) {
   .navbar {
     top: 1rem;
+    left: 3%;
+    right: 3%;
+    transform: none;
     width: 94%;
     padding: 1rem 1.5rem;
   }
   .navbar.scrolled {
     top: 0.8rem;
+    left: 3%;
+    right: 3%;
+    transform: none;
+    width: 94%;
     padding: 0.9rem 1.5rem;
   }
 }
@@ -421,10 +428,14 @@ a {
   transform: translateX(100%);
   transition: var(--transition-smooth);
   color: var(--color-charcoal);
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .mobile-menu.open {
   transform: translateX(0);
+  visibility: visible;
+  pointer-events: auto;
 }
 
 .mobile-menu-close {
@@ -462,6 +473,8 @@ a {
   overflow: hidden;
   color: var(--color-warm-white);
   padding: 0 1.5rem;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .hero-overlay {
