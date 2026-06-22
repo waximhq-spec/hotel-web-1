@@ -114,7 +114,6 @@ export default function Home() {
         <ul className="navbar-links">
           <li><a href="#about" className="navbar-link">About</a></li>
           <li><a href="#rooms" className="navbar-link">Rooms</a></li>
-          <li><a href="#experiences" className="navbar-link">Experiences</a></li>
           <li><a href="#booking" className="navbar-link">Book</a></li>
           <li><a href="#gallery" className="navbar-link">Gallery</a></li>
           <li><a href="#contact" className="navbar-link">Contact</a></li>
@@ -139,7 +138,6 @@ export default function Home() {
         </button>
         <a href="#about" className="mobile-menu-link" onClick={() => setMobileMenuOpen(false)}>About</a>
         <a href="#rooms" className="mobile-menu-link" onClick={() => setMobileMenuOpen(false)}>Rooms</a>
-        <a href="#experiences" className="mobile-menu-link" onClick={() => setMobileMenuOpen(false)}>Experiences</a>
         <a href="#booking" className="mobile-menu-link" onClick={() => setMobileMenuOpen(false)}>Book</a>
         <a href="#gallery" className="mobile-menu-link" onClick={() => setMobileMenuOpen(false)}>Gallery</a>
         <a href="#contact" className="mobile-menu-link" onClick={() => setMobileMenuOpen(false)}>Contact</a>
@@ -454,100 +452,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Experiences Section (Gradient Tonal Background) */}
-      <section id="experiences" className="section-padding reveal-fade-in">
-        <div className="max-width-container">
-          <div className="section-header" style={{ color: '#ffffff' }}>
-            <span className="section-label">Experiences</span>
-            <h2 className="section-title">Rituals of Stillness</h2>
-            <p className="section-subtitle" style={{ color: 'rgba(248, 247, 244, 0.7)', maxWidth: '650px', margin: '0 auto' }}>
-              Curated activities designed to engage the senses, promote longevity, and invite inner contemplation.
-            </p>
-          </div>
 
-          {/* Dark Separator */}
-          <div className="editorial-divider dark-section-divider max-width-container reveal-fade-in" style={{ marginBottom: '6rem' }}>
-            <span className="editorial-divider-mark">R I T U A L S</span>
-          </div>
-
-          <div className="experiences-container">
-            {/* Experience 1 */}
-            <div className="experience-item">
-              <div className="experience-img-box image-wrapper-editorial">
-                <Image
-                  src="/images/experience_spa.webp"
-                  alt="Lake Luxury Spa Treatment Room"
-                  fill
-                  sizes="(max-width: 992px) 100vw, 50vw"
-                  className="experience-img image-zoom-hover"
-                />
-              </div>
-              <div className="experience-content">
-                <span className="experience-label">Wellness</span>
-                <h3 className="experience-title">Lake Luxury Spa</h3>
-                <p className="experience-desc">
-                  Carved out of local black granite, our spa treatments are rooted in ancient Tibetan therapies. 
-                  Experience cold plunge stone baths, hot-stone treatments, and aromatherapy oils sourced from local forest flowers.
-                </p>
-                <a href="#booking" className="btn-accent" style={{ width: 'fit-content' }}>
-                  <span>Inquire Details</span>
-                  <ArrowRight size={14} className="arrow-icon" />
-                </a>
-              </div>
-            </div>
-
-            {/* Experience 2 */}
-            <div className="experience-item">
-              <div className="experience-img-box image-wrapper-editorial">
-                <Image
-                  src="/images/experience_dining.webp"
-                  alt="Waterfront Candlelight Dining Experience"
-                  fill
-                  sizes="(max-width: 992px) 100vw, 50vw"
-                  className="experience-img image-zoom-hover"
-                />
-              </div>
-              <div className="experience-content">
-                <span className="experience-label">Gastronomy</span>
-                <h3 className="experience-title">Waterfront Dining</h3>
-                <p className="experience-desc">
-                  Enjoy custom degustation menus crafted by Michelin-starred culinary artists. Featuring organic ingredients 
-                  grown in our own estate garden, served on private decks overlooking the twilight lake.
-                </p>
-                <a href="#booking" className="btn-accent" style={{ width: 'fit-content' }}>
-                  <span>Inquire Details</span>
-                  <ArrowRight size={14} className="arrow-icon" />
-                </a>
-              </div>
-            </div>
-
-            {/* Experience 3 */}
-            <div className="experience-item">
-              <div className="experience-img-box image-wrapper-editorial">
-                <Image
-                  src="/images/experience_lake.webp"
-                  alt="Dawn Lake Rowing Activity"
-                  fill
-                  sizes="(max-width: 992px) 100vw, 50vw"
-                  className="experience-img image-zoom-hover"
-                />
-              </div>
-              <div className="experience-content">
-                <span className="experience-label">Exploration</span>
-                <h3 className="experience-title">Dawn Lake Rowing</h3>
-                <p className="experience-desc">
-                  As the sun crests the mountains, glide silently in hand-built wooden rowing boats on the mist-covered water. 
-                  A meditative morning ritual guided by expert oarsmen, or enjoyed in absolute isolation.
-                </p>
-                <a href="#booking" className="btn-accent" style={{ width: 'fit-content' }}>
-                  <span>Inquire Details</span>
-                  <ArrowRight size={14} className="arrow-icon" />
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Booking Section */}
       <section id="booking" className="section-padding max-width-container reveal-fade-in">
@@ -851,7 +756,6 @@ export default function Home() {
               <ul className="footer-links">
                 <li><a href="#about" className="footer-link">The Hotel</a></li>
                 <li><a href="#rooms" className="footer-link">Rooms & Suites</a></li>
-                <li><a href="#experiences" className="footer-link">Rituals (Experiences)</a></li>
                 <li><a href="#gallery" className="footer-link">Visual Journal</a></li>
               </ul>
             </div>
